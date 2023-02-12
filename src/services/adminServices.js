@@ -19,4 +19,16 @@ export const adminServices = {
   addNewUser: (userInfo) => {
     return axiosInstance.post("/api/users", userInfo);
   },
+  getUserDetail: (userID) => {
+    return axiosInstance.get(`/api/users/${userID}`);
+  },
+  putUserInfo: (userID, userInfo) => {
+    return axiosInstance.put(`/api/users/${userID}`, userInfo);
+  },
+  deleteUser: (userID) => {
+    return axiosInstance.delete(`api/users?id=${userID}`);
+  },
+  searchUser: (userName) => {
+    return axiosInstance.get(`/api/users/search/${userName}`);
+  },
 };

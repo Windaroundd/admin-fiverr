@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import { setUserInfo } from "../../redux-toolkit/userSlice";
 import { userDataLocal } from "../../services/localService";
 import { userServices } from "../../services/userServices";
@@ -25,11 +26,13 @@ export default function Login() {
       userServices
         .postUserSingin(userAccount)
         .then((res) => {
+          toast.success("Login successfully");
           dispatch(setUserInfo(res.data.content));
           userDataLocal.set(res.data.content);
           navigate("/user");
         })
         .catch((err) => {
+          toast.error(err.message);
           console.log(err);
         });
     },

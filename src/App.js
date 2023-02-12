@@ -9,6 +9,8 @@ import Register from "./pages/register/Register";
 import JobPage from "./pages/Job/JobPage";
 import JobTypePage from "./pages/JobType/JobTypePage";
 import SevicesPage from "./pages/Serviecs/SevicesPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -51,6 +53,7 @@ function App() {
             }
           ></Route>
         </Routes>
+        <ToastContainer />
       </BrowserRouter>
     </div>
   );

@@ -52,3 +52,9 @@ header .header-right .user-avatar {
   height: 35px;
   border-radius: 50%;
 }
+.user-table {
+  box-shadow: 0 0 8px #bebec4 !important;
+}
+::placeholder {
+  text-align: center;
+}

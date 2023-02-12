@@ -4,6 +4,7 @@ import { Table } from "antd";
 import { adminServices } from "../../services/adminServices";
 import { columns } from "./userUtils";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 // Formik
 import * as Yup from "yup";
@@ -13,7 +14,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  Hidden,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import moment from "moment";
 
 const style = {
   position: "absolute",
@@ -29,69 +37,101 @@ export default function User() {
   let { role } = useSelector((state) => {
     return state.userSlice.user.user;
   });
+  const [isEdit, setIsEdit] = useState(false);
   const [gender, setGender] = useState(true);
 
-  const handleChangeGender = (event) => {
-    setGender(event.target.value);
-  };
-  const [open, setOpen] = React.useState(false);
+  const [userDetail, setUserDetail] = useState({});
+
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [modal, setModal] = useState(false);
+  const getUserDetail = (userID) => {
+    adminServices
+      .getUserDetail(userID)
+      .then((res) => {
+        let userDetail = res.data.content;
+        let fakeUserDetail = {
+          ...JSON.parse(JSON.stringify(userDetail)),
+          password: "123456789",
+          confirmPassword: "123456789",
+        };
+        setUserDetail(fakeUserDetail);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+  const renderUserList = (userList) => {
+    return userList.map((userAccount) => {
+      return {
+        key: userAccount.id,
+        name: userAccount.name,
+        avatar: userAccount.hinhAnh,
+        role: userAccount.role,
+        action: (
+          <div className="flex  gap-2">
+            <button
+              onClick={() => {
+                setIsEdit(true);
+                handleOpen();
+                getUserDetail(userAccount.id);
+              }}
+              className="px-2 py-1 ant-btn ant-btn-default"
+            >
+              View & Edit
+            </button>
+            <button
+              onClick={() => {
+                handleDeleteUser(userAccount.id);
+              }}
+              className="px-2 py-1  ant-btn ant-btn-primary ant-btn-dangerous"
+            >
+              Delete
+            </button>
+          </div>
+        ),
+      };
+    });
+  };
   const [userList, setUserList] = useState([]);
   useEffect(() => {
     adminServices
       .getUserList()
       .then((res) => {
-        const renderUserList = (userList) => {
-          return userList.map((userAccount) => {
-            return {
-              key: userAccount.id,
-              name: userAccount.name,
-              avatar: userAccount.hinhAnh,
-              role: userAccount.role,
-              action: (
-                <div className="flex  gap-2">
-                  <button
-                    onClick={() => {}}
-                    className="px-2 py-1 ant-btn ant-btn-default"
-                  >
-                    View & Edit
-                  </button>
-                  <button
-                    onClick={() => {}}
-                    className="px-2 py-1  ant-btn ant-btn-primary ant-btn-dangerous"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ),
-            };
-          });
-        };
         setUserList(renderUserList(res.data.content));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
+  const handleChangeGender = (event) => {
+    setGender(event.target.value);
+  };
+  const handleDeleteUser = (userID) => {
+    adminServices
+      .deleteUser(userID)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.content);
+      });
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
     initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      birthday: "",
+      name: userDetail.name || "",
+      email: userDetail.email || "",
+      password: userDetail.password || "",
+      phone: userDetail.phone || "",
+      birthday: moment(userDetail.birthday).format("DD / MM / YYYY") || "",
 
-      role: "",
-      skill: "",
-      certification: "",
-      confirmPassword: "",
+      role: userDetail.role || "",
+      skill: userDetail?.skill?.join() || "",
+      certification: userDetail?.certification?.join() || "",
+      confirmPassword: userDetail.confirmPassword || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter user name"),
@@ -126,28 +166,75 @@ export default function User() {
         certification: [...certification.split(",")],
         gender: gender,
       };
+      if (isEdit) {
+        adminServices
+          .putUserInfo(userDetail.id, UserInfoFinal)
+          .then((res) => {
+            toast.success("Update user successfully");
+            setUserDetail({});
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      } else {
+        adminServices
+          .addNewUser(UserInfoFinal)
+          .then((res) => {
+            toast.success("Add user successfully");
+            setUserDetail({});
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+    },
+  });
+  const searchUser = (username) => {
+    if (username === "") {
       adminServices
-        .addNewUser(UserInfoFinal)
+        .getUserList()
         .then((res) => {
-          console.log(res);
+          setUserList(renderUserList(res.data.content));
         })
         .catch((err) => {
           console.log(err);
         });
-    },
-  });
+    } else {
+      adminServices
+        .searchUser(username)
+        .then((res) => {
+          setUserList(renderUserList(res.data.content));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className="my-8 ">
-      <div className="container  p-6 ">
+      <div className="container  p-6 shadow-xl user-table ">
         <div>
           <button
-            onClick={handleOpen}
+            onClick={() => {
+              handleOpen();
+              setIsEdit(false);
+            }}
             className="px-2 py-3 bg-green-500 rounded-md mb-3"
           >
-            Add new User
+            ADD NEW USER
           </button>
         </div>
-        <Table className="shadow-xl" columns={columns} dataSource={userList} />
+        <div className="flex justify-center">
+          <input
+            onChange={(e) => {
+              searchUser(e.target.value);
+            }}
+            className="w-3/4 py-2 px-3"
+            type="text"
+            placeholder="Search user"
+          />
+        </div>
+        <Table className="" columns={columns} dataSource={userList} />
       </div>
       <Modal
         open={open}
@@ -156,7 +243,7 @@ export default function User() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form onSubmit={validation.handleSubmit}>
+          <form id="user-form" onSubmit={validation.handleSubmit}>
             <div className="mb-4">
               <h1 className="text-3xl font-bold text-center">ADD NEW USER</h1>
             </div>
@@ -192,7 +279,10 @@ export default function User() {
                 )}
               </div>
             </div>
-            <div className="flex justify-start gap-2 mb-4">
+            <div
+              className={`${isEdit ? "hidden" : "flex"}
+               justify-start gap-2 mb-4`}
+            >
               <div>
                 <TextField
                   id="outlined-basic"
