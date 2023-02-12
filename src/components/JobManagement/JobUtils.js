@@ -35,4 +35,9 @@ export const columns = [
     dataIndex: "shortDesc",
     key: "shortDesc",
   },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+  },
 ];

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 
 import { adminServices } from "../../services/adminServices";
@@ -10,17 +10,10 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import {
-  FormControl,
-  Hidden,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import moment from "moment";
 
 const style = {
@@ -95,7 +88,7 @@ export default function User() {
     });
   };
   const [userList, setUserList] = useState([]);
-  useEffect(() => {
+  const getUserList = () => {
     adminServices
       .getUserList()
       .then((res) => {
@@ -104,6 +97,9 @@ export default function User() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    getUserList();
   }, []);
   const handleChangeGender = (event) => {
     setGender(event.target.value);
@@ -172,6 +168,7 @@ export default function User() {
           .then((res) => {
             toast.success("Update user successfully");
             setUserDetail({});
+            getUserList();
           })
           .catch((err) => {
             toast.error(err.message);
@@ -182,6 +179,7 @@ export default function User() {
           .then((res) => {
             toast.success("Add user successfully");
             setUserDetail({});
+            getUserList();
           })
           .catch((err) => {
             toast.error(err.message);
@@ -211,7 +209,7 @@ export default function User() {
     }
   };
   return (
-    <div className="my-8 ">
+    <div className="">
       <div className="container  p-6 shadow-xl user-table ">
         <div>
           <button

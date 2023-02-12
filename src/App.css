@@ -4,17 +4,6 @@
   box-sizing: border-box;
 }
 
-.ant-btn {
-  color: white;
-  border: 1px solid #17a2b8;
-  background-color: #17a2b8;
-}
-.ant-btn:hover,
-.ant-btn:focus {
-  color: black;
-  border-color: #17a2b8;
-  background-color: #fff;
-}
 .ant-btn-dangerous.ant-btn-primary:hover,
 .ant-btn-dangerous.ant-btn-primary:focus {
   color: #ff4d4f;
@@ -57,4 +46,39 @@ header .header-right .user-avatar {
 }
 ::placeholder {
   text-align: center;
+}
+.ant-btn {
+  background-image: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  height: 32px;
+  line-height: 1.5715;
+  padding: 4px 15px;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.ant-btn:hover,
+.ant-btn:focus {
+  color: black;
+  border-color: #17a2b8;
+  background-color: #fff;
+}
+.ant-btn {
+  color: white;
+  border: 1px solid #17a2b8;
+  background-color: #17a2b8;
 }
