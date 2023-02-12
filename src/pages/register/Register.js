@@ -43,7 +43,7 @@ export default function Login() {
   return (
     <div className="login-page">
       <div className="login-form py-8 px-5 container mx-auto mt-20">
-        <form action="" onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.han}>
           <h1 className="uppercase text-center text-3xl pb-5">
             Sign Up to Fiverr Admin
           </h1>

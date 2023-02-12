@@ -25,11 +25,9 @@ export default function Login() {
       userServices
         .postUserSingin(userAccount)
         .then((res) => {
-          console.log("res: ", res);
-
           dispatch(setUserInfo(res.data.content));
           userDataLocal.set(res.data.content);
-          navigate("/home");
+          navigate("/user");
         })
         .catch((err) => {
           console.log(err);

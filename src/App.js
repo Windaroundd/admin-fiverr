@@ -7,6 +7,8 @@ import Homepages from "./pages/home/Homepages";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import JobPage from "./pages/Job/JobPage";
+import JobTypePage from "./pages/JobType/JobTypePage";
+import SevicesPage from "./pages/Serviecs/SevicesPage";
 
 function App() {
   return (
@@ -15,14 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/signup" element={<Register />} />
-          <Route
-            path="/home"
-            element={
-              <HeaderOnly>
-                <Homepages />
-              </HeaderOnly>
-            }
-          ></Route>
+
           <Route
             path="/user"
             element={
@@ -39,6 +34,22 @@ function App() {
               </HeaderOnly>
             }
           />
+          <Route
+            path="/job-type"
+            element={
+              <HeaderOnly>
+                <JobTypePage />
+              </HeaderOnly>
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              <HeaderOnly>
+                <SevicesPage />
+              </HeaderOnly>
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>

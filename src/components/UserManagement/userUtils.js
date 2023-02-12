@@ -19,4 +19,9 @@ export const columns = [
     dataIndex: "role",
     key: "role",
   },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+  },
 ];

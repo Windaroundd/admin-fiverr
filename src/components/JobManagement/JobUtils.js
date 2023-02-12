@@ -19,12 +19,6 @@ export const columns = [
     dataIndex: "avatar",
     key: "avatar",
   },
-
-  {
-    title: "Decription",
-    dataIndex: "shortDesc",
-    key: "shortDesc",
-  },
   {
     title: "Price",
     dataIndex: "price",
@@ -34,5 +28,11 @@ export const columns = [
     title: "Rate",
     dataIndex: "rate",
     key: "rate",
+  },
+
+  {
+    title: "Decription",
+    dataIndex: "shortDesc",
+    key: "shortDesc",
   },
 ];

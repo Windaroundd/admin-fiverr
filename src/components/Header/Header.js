@@ -27,10 +27,10 @@ export default function Header() {
             <NavLink to="/job">Job</NavLink>
           </div>
           <div className="ml-3 mr-3">
-            <NavLink to="/jobType">Job Type</NavLink>
+            <NavLink to="/job-type">Job Type</NavLink>
           </div>
           <div className="ml-3 mr-3">
-            <NavLink to="services">Services</NavLink>
+            <NavLink to="/services">Services</NavLink>
           </div>
         </div>
         <div className="header-right flex items-center">
