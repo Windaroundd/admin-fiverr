@@ -54,4 +54,13 @@ export const adminServices = {
   searchUser: (userName) => {
     return axiosInstance.get(`/api/users/search/${userName}`);
   },
+  deleteJobType: (jobID) => {
+    return axiosInstance.delete(`/api/loai-cong-viec/${jobID}`);
+  },
+  putJobType: (jobID) => {
+    return axiosInstance.put(`/api/loai-cong-viec/${jobID}`);
+  },
+  postJobType: (jobInfo) => {
+    return axiosInstance.post(`/api/loai-cong-viec`, jobInfo);
+  },
 };

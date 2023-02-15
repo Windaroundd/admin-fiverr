@@ -19,6 +19,11 @@ export const columns = [
     dataIndex: "img",
     key: "img",
   },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+  },
 ];
 
 export const expandedColumns = [
@@ -31,5 +36,10 @@ export const expandedColumns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+  },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
   },
 ];

@@ -51,7 +51,7 @@ export default function JobManagement() {
               }}
               className=" ant-btn ant-btn-default"
             >
-              <span>View & Edit</span>
+              <span>EDIT</span>
             </button>
             <button
               onClick={() => {
@@ -59,7 +59,7 @@ export default function JobManagement() {
               }}
               className="  ant-btn ant-btn-primary ant-btn-dangerous"
             >
-              <span>Delete</span>
+              <span>DEL</span>
             </button>
           </div>
         ),
