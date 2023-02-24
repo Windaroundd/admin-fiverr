@@ -32,7 +32,7 @@ export default function Login() {
           navigate("/user");
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err.response.data.content);
           console.log(err);
         });
     },

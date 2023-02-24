@@ -57,7 +57,7 @@ export default function JobTypeManagement() {
         id: +jobInfo.id,
         tenLoaiCongViec: jobInfo.tenLoaiCongViec,
       };
-      console.log("jobInfoFinal: ", jobInfoFinal);
+
       if (isEdit) {
         adminServices
           .putJobType(jobInfoFinal)
@@ -93,7 +93,6 @@ export default function JobTypeManagement() {
     adminServices
       .getJobTypeList()
       .then((res) => {
-        console.log("res: ", res);
         const renderJobTypeList = (jobTypeList) => {
           return jobTypeList.map((jobType) => {
             return {

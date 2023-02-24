@@ -1,9 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import User from "./components/UserManagement/User";
+
 import UserPage from "./pages/User/UserPage";
-import HeaderOnly from "./HOC/HeaderOnly/HeaderOnly";
-import Homepages from "./pages/home/Homepages";
+
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import JobPage from "./pages/Job/JobPage";
@@ -11,6 +10,7 @@ import JobTypePage from "./pages/JobType/JobTypePage";
 import SevicesPage from "./pages/Serviecs/SevicesPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SideBar from "./HOC/HeaderOnly/SideBar";
 
 function App() {
   return (
@@ -23,33 +23,33 @@ function App() {
           <Route
             path="/user"
             element={
-              <HeaderOnly>
+              <SideBar>
                 <UserPage />
-              </HeaderOnly>
+              </SideBar>
             }
           ></Route>
           <Route
             path="/job"
             element={
-              <HeaderOnly>
+              <SideBar>
                 <JobPage />
-              </HeaderOnly>
+              </SideBar>
             }
           />
           <Route
             path="/job-type"
             element={
-              <HeaderOnly>
+              <SideBar>
                 <JobTypePage />
-              </HeaderOnly>
+              </SideBar>
             }
           />
           <Route
             path="/services"
             element={
-              <HeaderOnly>
+              <SideBar>
                 <SevicesPage />
-              </HeaderOnly>
+              </SideBar>
             }
           ></Route>
         </Routes>

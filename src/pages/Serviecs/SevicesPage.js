@@ -155,9 +155,10 @@ export default function SevicesPage() {
         adminServices
           .putServicebyID(serviceDetail.id, jobInfoFinal)
           .then((res) => {
-            toast.success(res.message);
+            toast.success(res.data.message);
             getServicesList();
             setServiceDetail({});
+            validation.resetForm();
           })
           .catch((err) => {
             toast.error(err.content);
@@ -166,9 +167,10 @@ export default function SevicesPage() {
         adminServices
           .postService(jobInfoFinal)
           .then((res) => {
-            toast.success(res.message);
+            toast.success(res.data.message);
             getServicesList();
             setServiceDetail({});
+            validation.resetForm();
           })
           .catch((err) => {
             toast.error(err.content);
@@ -180,8 +182,10 @@ export default function SevicesPage() {
     adminServices
       .deleteService(serviceID)
       .then((res) => {
-        toast(res.message);
-        getServicesList();
+        toast.success(res.data.message);
+        setTimeout(() => {
+          getServicesList();
+        }, 1000);
       })
       .catch((err) => {
         toast.error(err.message);
